@@ -4,10 +4,20 @@ defmodule Nwone.MixProject do
   def project do
     [
       app: :nwone,
+      releases: [
+        nwone: [
+          include_erts: true,
+          include_executables_for: [:unix],
+          applications: [
+            runtime_tools: :permanent
+          ]
+        ]
+      ],
       version: "0.1.0",
-      elixir: "~> 1.5",
+      elixir: "~> 1.10",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      build_embedded: Mix.env == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -38,7 +48,9 @@ defmodule Nwone.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:phoenix_live_view, "~> 0.5.1"},
+      {:floki, ">= 0.0.0", only: :test}
     ]
   end
 end

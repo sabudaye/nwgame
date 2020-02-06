@@ -1,0 +1,22 @@
+<div class="homepage">
+  <div class="homeWrapper">
+    <div class="homeContainer" style="grid-template-columns: 50% 50%;">
+      <div class="box card-panel blue-grey darken-4" style="margin: 128px;">
+        <div class="loginContainer">
+          <div class="loginHeader">
+            Welcome to NWGame!
+          </div>
+          <div>
+            <%= form_for @conn, Routes.game_path(@conn, :login), fn f ->  %>
+            <div class="row">
+              <div class="input-field col s12 playername-input">
+                <%= text_input f, :name, class: "loginInput validate", style: "color: #fff;", id: "playername", type: "text", placeholder: "Enter a username to get started" %>
+              </div>
+            </div>
+            <%= submit "Get Started!", class: "loginSubmit" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

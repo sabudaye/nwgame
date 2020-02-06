@@ -1,3 +1,28 @@
 /* This file is for your main application css. */
 
 @import "./phoenix.css";
+@import "../../deps/phoenix_live_view/assets/css/live_view.css";
+@import "./login.css";
+
+body {
+    margin: 0px;
+    width: 100vw;
+    height: 100vh;
+    /* overflow: hidden; */
+    font-family: 'Fira Sans', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+}
+
+.mainContainer {
+    margin: 0 auto;
+    padding: 0px;
+    position: relative;
+    width: 100%
+}

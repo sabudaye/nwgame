@@ -1,4 +1,4 @@
-defmodule NwoneWeb.LayoutViewTest do
+defmodule NwoneWeb.GameViewTest do
   use NwoneWeb.ConnCase, async: true
 
   # When testing helpers, you may want to import Phoenix.HTML and

@@ -12,7 +12,10 @@ config :nwone, NwoneWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "wJz9ezodcsU9y0g4XjOrbhnTkb1xATHwcBXmSNbN/43GRgg1Z7gyhXSHr4vpsehS",
   render_errors: [view: NwoneWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Nwone.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Nwone.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [
+    signing_salt: "SECRET_SALT"
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,
