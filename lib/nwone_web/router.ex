@@ -13,7 +13,8 @@ defmodule NwoneWeb.Router do
   scope "/", NwoneWeb do
     pipe_through :browser
 
-    get "/", GameController, :index
-    get "/game", GameController, :login
+    get "/", GameController, :login
+    post "/start", GameController, :start
+    get "/game", GameController, :game
   end
 end

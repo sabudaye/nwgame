@@ -1,0 +1,17 @@
+<div class="main-container">
+  <div class="game-wrapper">
+    <section>
+      <div class="game-map-container">
+        <table class="game-map">
+          <%= for tile <- @map.tiles do %>
+            <%= if tile.first_in_row do %><tr><% end %>
+            <td class="tile <%= if tile.blocked do %>blocked <% end %> <%= if tile.last_in_row do %>last-in-row <% end %>">
+              <%= tile.row %>,<%= tile.col %>
+            </td>
+            <%= if tile.last_in_row do %></tr><% end %>
+          <% end %>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>

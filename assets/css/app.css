@@ -8,7 +8,6 @@ body {
     margin: 0px;
     width: 100vw;
     height: 100vh;
-    /* overflow: hidden; */
     font-family: 'Fira Sans', sans-serif;
 }
 
@@ -16,13 +15,46 @@ body {
     box-sizing: border-box;
 }
 
-img {
-    max-width: 100%;
-}
-
-.mainContainer {
+.main-container {
     margin: 0 auto;
     padding: 0px;
     position: relative;
-    width: 100%
+    width: 100%;
+    height: 100vh;
+}
+
+.game-wrapper {
+    background-color: #312f30;
+    width: 100%;
+    height: 100vh;
+}
+
+.game-map-container {
+    padding: 10vmin;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-map {
+    border: 1px solid #e6305a;
+    position: relative;
+    width: 80vmin;
+    height: 80vmin;
+}
+
+.tile {
+    border: 1px solid #a3a3a3;
+    background-color: #dfdfdf;
+    padding: 0;
+    text-align: center;
+}
+
+.last-in-row {
+    width: 7.76vmin;
+}
+
+.tile.blocked {
+    background-color: #023513;
 }

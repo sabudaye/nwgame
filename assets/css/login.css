@@ -1,15 +1,15 @@
-.homepage {
+.loginpage {
     width: 100%;
     height: 100vh;
 }
 
-.homeWrapper {
+.login-wrapper {
     background-color: #312f30;
     width: 100%;
     height: 100%;
 }
 
-.homeContainer {
+.login-container {
     margin: 0px auto;
     width: 80%;
     height: calc(100vh - 200px);
@@ -32,7 +32,7 @@
     font-family: 'Fira Sans', sans-serif;
 }
 
-.loginContainer {
+.login-form-container {
     margin: 32px;
     border: 0px solid #ffffff;
     border-radius: 2px;
@@ -47,7 +47,7 @@
     left: 2%;
 }
 
-.loginHeader {
+.login-header {
     font-size: 46px;
     font-family: 'Fira Sans', sans-serif;
     margin-bottom: 20px;
@@ -70,7 +70,7 @@ input[type='text']:focus {
     color: #313638;
 }
 
-.loginSubmit {
+.login-submit {
     margin: 0;
     background: #6b6969;
     font-family: 'Fira Sans', sans-serif;
@@ -84,12 +84,12 @@ input[type='text']:focus {
     position: absolute;
 }
 
-.loginSubmit:hover {
+.login-submit:hover {
     background: #e6305a;
 }
 
 @media only screen and (max-width: 1800px) {
-    .homeContainer {
+    .login-container {
         margin: 0px auto;
         width: 100%;
     }

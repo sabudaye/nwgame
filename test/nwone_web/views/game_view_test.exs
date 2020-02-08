@@ -1,3 +1,3 @@
-defmodule NwoneWeb.PageViewTest do
+defmodule NwoneWeb.GameViewTest do
   use NwoneWeb.ConnCase, async: true
 end
