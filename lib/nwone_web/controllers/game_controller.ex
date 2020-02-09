@@ -15,11 +15,8 @@ defmodule NwoneWeb.GameController do
     name = params["name"] || get_session(conn, :name)
     unless(name, do: redirect(conn, to: Routes.game_path(conn, :login)))
 
-    player_pid = case Nwone.PlayerServer.start(name, Nwone.GameServer) do
-      {:ok, player_pid} -> player_pid
-      {:error, {:already_started, player_pid}} -> player_pid
-    end
+    player = Nwone.PlayerServer.start(name, Nwone.GameServer)
 
-    live_render(conn, NwoneWeb.GameLive, session: %{"name" => name, "player_pid" => player_pid})
+    live_render(conn, NwoneWeb.GameLive, session: %{"player" => player, "player_pid" => player.pid})
   end
 end

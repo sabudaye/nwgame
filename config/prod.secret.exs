@@ -13,8 +13,7 @@ use Mix.Config
 
 secret_key_base = "3m/P/miMJGk+WdcOwQCxEuivsQiw3SJjF0NYWN+vQxFJoIqJ4eQOa0OYesDcivsy"
 
-config :nwone, NwoneWeb.Endpoint,
-  secret_key_base: secret_key_base
+config :nwone, NwoneWeb.Endpoint, secret_key_base: secret_key_base
 
 # ## Using releases (Elixir v1.9+)
 #

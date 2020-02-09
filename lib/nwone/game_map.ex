@@ -12,38 +12,78 @@ defmodule Nwone.GameMap do
 
   def generate(game_map_size \\ @default_map_size) do
     tiles_num = trunc(:math.pow(game_map_size, 2) - 1)
-    tiles = for n <- 0..tiles_num do
-      row = div(n, game_map_size) + 1
-      column = rem(n, game_map_size) + 1
-      %Tile{
-        row: row,
-        col: column,
-        blocked: blocked_tile?(row, column, game_map_size),
-        first_in_row: column == 1,
-        last_in_row: column == game_map_size
-      }
-    end
+
+    tiles =
+      for n <- 0..tiles_num do
+        row = div(n, game_map_size) + 1
+        column = rem(n, game_map_size) + 1
+
+        %Tile{
+          row: row,
+          col: column,
+          index: n,
+          blocked: blocked_tile?(row, column, game_map_size),
+          first_in_row: column == 1,
+          last_in_row: column == game_map_size
+        }
+      end
+
     %GameMap{tiles: tiles}
   end
 
-  def put_player(game_map, player_name) do
-    {tile, index} = game_map
-      |> free_tiles()
-      |> Enum.random()
-
-    %GameMap{game_map | tiles: List.replace_at(
-      game_map.tiles,
-      index,
-      %Tile{tile | players: [player_name | tile.players]}
-    )}
+  def update(game_map, players) do
+    Enum.reduce(players, game_map, fn player, game_map ->
+      move_player(game_map, player, player.position, player.position)
+    end)
   end
 
-  defp free_tiles(game_map) do
+  def put_player(game_map, player, index) do
+    tile = Enum.at(game_map.tiles, index)
+
+    %GameMap{
+      game_map
+      | tiles:
+          List.replace_at(
+            game_map.tiles,
+            index,
+            %Tile{tile | players: [player | tile.players]}
+          )
+    }
+  end
+
+  def move_player(game_map, player, from_index, to_index) do
+    game_map
+    |> remove_player(player, from_index)
+    |> put_player(player, to_index)
+  end
+
+  def remove_player(game_map, player, index) do
+    tile = Enum.at(game_map.tiles, index)
+    player_index = find_player(tile.players, player)
+
+    %GameMap{
+      game_map
+      | tiles:
+          List.replace_at(
+            game_map.tiles,
+            index,
+            %Tile{tile | players: List.delete_at(tile.players, player_index)}
+          )
+    }
+  end
+
+  def free_tiles(game_map) do
     game_map.tiles
     |> Enum.with_index()
-    |> Enum.filter(fn ({tile, _index}) ->
+    |> Enum.filter(fn {tile, _index} ->
       !tile.blocked && length(tile.players) == 0
     end)
+  end
+
+  def movable_tiles(game_map) do
+    game_map.tiles
+    |> Enum.with_index()
+    |> Enum.filter(fn {tile, _index} -> !tile.blocked end)
   end
 
   defp blocked_tile?(row, column, game_map_size) do
@@ -74,4 +114,9 @@ defmodule Nwone.GameMap do
       _ -> false
     end
   end
+
+  defp find_player(players, player) do
+    Enum.find_index(players, fn p -> p.pid == player.pid end)
+  end
+
 end

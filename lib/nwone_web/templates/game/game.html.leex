@@ -1,12 +1,12 @@
 <div class="main-container">
   <div class="game-wrapper">
     <section>
-      <div class="game-map-container">
+      <div class="game-map-container" phx-window-keydown="do_action">
         <table class="game-map">
           <%= for tile <- @map.tiles do %>
             <%= if tile.first_in_row do %><tr><% end %>
-            <td class="tile <%= tile_class(tile, @name) %>">
-              <div class="player-name"><%= player_name(tile, @name) %></div>
+            <td class="tile <%= tile_class(tile, @player) %>">
+              <div class="player-name"><%= player_name(tile, @player) %></div>
             </td>
             <%= if tile.last_in_row do %></tr><% end %>
           <% end %>

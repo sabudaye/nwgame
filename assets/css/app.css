@@ -75,6 +75,13 @@ body {
     background-size: 4vmin 5vmin;
 }
 
+.tile.dead {
+    background-image: url("/images/dead.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 4vmin 5vmin;
+}
+
 .player-name {
     position: relative;
     bottom: -3vmin;
