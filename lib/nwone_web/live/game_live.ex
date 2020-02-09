@@ -3,6 +3,7 @@ defmodule NwoneWeb.GameLive do
 
   alias Nwone.GameServer
   alias Nwone.PlayerServer
+  require Logger
 
   @control_key_codes ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space"]
 
@@ -46,5 +47,9 @@ defmodule NwoneWeb.GameLive do
     new_map = GameServer.get_map()
     new_player = PlayerServer.get_player(socket.assigns.player_pid)
     {:noreply, assign(socket, map: new_map, player: new_player)}
+  end
+
+  def handle_info(_, socket) do
+    {:noreply, socket}
   end
 end

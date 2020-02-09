@@ -9,7 +9,8 @@ defmodule Nwone.Player do
             state: :alive,
             position: 0,
             pid: nil,
-            game_server: nil
+            game_server: nil,
+            timer: nil
 
   def change_position(player, new_position) do
     %Player{player | position: new_position}

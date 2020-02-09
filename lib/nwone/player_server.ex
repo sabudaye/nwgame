@@ -8,7 +8,7 @@ defmodule Nwone.PlayerServer do
   alias Nwone.Player
   alias NwoneWeb.GameLive
 
-  @timeout :timer.hours(1)
+  @timeout :timer.seconds(20)
   @registry Nwone.PlayerRegistry
   @supervisor Nwone.PlayerSupervisor
   @resurect_time 5000
@@ -19,7 +19,8 @@ defmodule Nwone.PlayerServer do
     player = %Player{
       name: player_name,
       pid: via_tuple(player_name),
-      game_server: game_server
+      game_server: game_server,
+      timer: start_timer()
     }
 
     _ = DynamicSupervisor.start_child(@supervisor, {__MODULE__, player})
@@ -52,13 +53,20 @@ defmodule Nwone.PlayerServer do
     GenServer.cast(pid, {:die, attacker})
   end
 
+  def stop_all() do
+    @supervisor
+    |> Supervisor.which_children()
+    |> Enum.map(&elem(&1, 1))
+    |> Enum.each(&DynamicSupervisor.terminate_child(@supervisor, &1))
+  end
+
   # Callbacks
 
   def init(%Player{name: player_name, game_server: game_server} = player) do
     Logger.info("Starting player process for #{player_name}")
     {_, player} = GameServer.join(game_server, player)
     GameLive.notify(GameLive.topic())
-    {:ok, player, @timeout}
+    {:ok, %Player{player | timer: start_timer()}, @timeout}
   end
 
   def handle_call(:get_player, _from, player) do
@@ -70,14 +78,14 @@ defmodule Nwone.PlayerServer do
     {:reply, {map, player}, player}
   end
 
-  def handle_call(:Space, _from, %Player{game_server: game_server} = player) do
+  def handle_call(:Space, _from, %Player{game_server: game_server, timer: ref} = player) do
     {map, player} = GameServer.hit(game_server, player)
-    {:reply, {map, player}, player}
+    {:reply, {map, player}, %Player{player | timer: restart_timer(ref)}}
   end
 
-  def handle_call(move, _from, %Player{game_server: game_server} = player) do
+  def handle_call(move, _from, %Player{game_server: game_server, timer: ref} = player) do
     {map, player} = GameServer.move_player(game_server, player, move)
-    {:reply, {map, player}, player}
+    {:reply, {map, player}, %Player{player | timer: restart_timer(ref)}}
   end
 
   def handle_cast({:die, attacker}, player) do
@@ -90,14 +98,19 @@ defmodule Nwone.PlayerServer do
 
   def handle_info(:resurect, player) do
     player = Player.resurect(player)
-    GameServer.resurection(player.game_server, player)
-    GameLive.notify(GameLive.topic())
-    Logger.info("Player #{player.name} resurected")
-    {:noreply, player}
+    GameServer.remove_player(player.game_server, player)
+
+    {:stop, {:shutdown, :resurect}, player}
   end
 
   def handle_info(:timeout, player) do
+    GameServer.remove_player(player.game_server, player)
     {:stop, {:shutdown, :timeout}, player}
+  end
+
+  def terminate({:shutdown, :resurect}, %Player{name: player_name}) do
+    Logger.info("Player #{player_name} resurected")
+    :ok
   end
 
   def terminate({:shutdown, :timeout}, %Player{name: player_name}) do
@@ -108,5 +121,15 @@ defmodule Nwone.PlayerServer do
   def terminate(_reason, %Player{name: player_name}) do
     Logger.info("Strange termination for [#{player_name}].")
     :ok
+  end
+
+  def start_timer() do
+    {:ok, ref} = :timer.send_after(@timeout, self(), :timeout)
+    ref
+  end
+
+  def restart_timer(ref) do
+    :timer.cancel(ref)
+    start_timer()
   end
 end

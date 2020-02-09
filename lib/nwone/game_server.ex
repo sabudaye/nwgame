@@ -9,6 +9,8 @@ defmodule Nwone.GameServer do
   alias Nwone.PlayerServer
   require Logger
 
+  @timeout :timer.minutes(10)
+
   # API
 
   def start_link(_) do
@@ -39,10 +41,14 @@ defmodule Nwone.GameServer do
     GenServer.cast(game_server, {:resurection, player})
   end
 
+  def remove_player(game_server, player) do
+    GenServer.cast(game_server, {:remove_player, player})
+  end
+
   # Callbacks
 
   def init(map) do
-    {:ok, %{map: map, players: []}}
+    {:ok, %{map: map, players: [], timer: start_timer()}}
   end
 
   def handle_call(:get_map, _from, %{map: map} = state) do
@@ -88,7 +94,7 @@ defmodule Nwone.GameServer do
     {:reply, {map, player}, new_state}
   end
 
-  def handle_call({:move_player, player, move}, _from, %{map: map, players: players} = state) do
+  def handle_call({:move_player, player, move}, _from, %{map: map, players: players, timer: ref} = state) do
     player_index = find_player(players, player)
 
     {new_map, player} = do_move_player(player_index, map, player, move)
@@ -97,10 +103,29 @@ defmodule Nwone.GameServer do
       state
       |> put_in([:map], new_map)
       |> put_in([:players], replace_player(player_index, players, player))
+      |> put_in([:timer], restart_timer(ref))
 
-    Logger.info("Player #{player.name} moved to #{player.position}")
     {:reply, {new_map, player}, new_state}
   end
+
+  def handle_cast({:remove_player, _}, %{players: []} = state) do
+    {:noreply, state}
+  end
+
+  def handle_cast({:remove_player, player}, %{map: map, players: players} = state) do
+    player_index = find_player(players, player)
+
+    new_map = GameMap.remove_player(map, player, player.position)
+
+    new_state =
+      state
+      |> put_in([:map], new_map)
+      |> put_in([:players], List.delete_at(players, player_index))
+
+    Logger.info("Player #{player.name} removed")
+    {:noreply, new_state}
+  end
+
 
   def handle_cast({:resurection, player}, %{players: players} = state) do
     player_index = find_player(players, player)
@@ -110,6 +135,11 @@ defmodule Nwone.GameServer do
       |> put_in([:players], replace_player(player_index, players, player))
 
     {:noreply, new_state}
+  end
+
+  def handle_info(:cleanup, _state) do
+    PlayerServer.stop_all()
+    {:noreply, %{map: GameMap.generate(), players: [], timer: start_timer()}}
   end
 
   # Private functions
@@ -180,5 +210,15 @@ defmodule Nwone.GameServer do
       position + map_size - 1,
       position + map_size + 1
     ]
+  end
+
+  def start_timer() do
+    {:ok, ref} = :timer.send_after(@timeout, self(), :cleanup)
+    ref
+  end
+
+  def restart_timer(ref) do
+    :timer.cancel(ref)
+    start_timer()
   end
 end
