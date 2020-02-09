@@ -33,6 +33,7 @@ defmodule NwoneWeb.GameView do
 
   def alive_first(players) do
     res = Enum.filter(players, fn p -> p.state == :alive end)
+
     if res == [] do
       hd(players)
     else

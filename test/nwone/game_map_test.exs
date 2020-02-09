@@ -10,7 +10,14 @@ defmodule Nwone.GameMapTest do
       %GameMap{tiles: tiles} = GameMap.generate()
       assert Enum.count(tiles) == 100
       assert hd(tiles) == %Tile{row: 1, col: 1, blocked: true, last_in_row: false}
-      assert Enum.at(tiles, 9) == %Tile{row: 1, col: 10, index: 9, blocked: true, first_in_row: false}
+
+      assert Enum.at(tiles, 9) == %Tile{
+               row: 1,
+               col: 10,
+               index: 9,
+               blocked: true,
+               first_in_row: false
+             }
 
       assert Enum.at(tiles, 12) == %Tile{
                row: 2,
@@ -22,7 +29,14 @@ defmodule Nwone.GameMapTest do
              }
 
       assert Enum.at(tiles, 41).blocked
-      assert List.last(tiles) == %Tile{row: 10, col: 10, index: 99, blocked: true, first_in_row: false}
+
+      assert List.last(tiles) == %Tile{
+               row: 10,
+               col: 10,
+               index: 99,
+               blocked: true,
+               first_in_row: false
+             }
     end
   end
 

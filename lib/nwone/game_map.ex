@@ -118,5 +118,4 @@ defmodule Nwone.GameMap do
   defp find_player(players, player) do
     Enum.find_index(players, fn p -> p.pid == player.pid end)
   end
-
 end

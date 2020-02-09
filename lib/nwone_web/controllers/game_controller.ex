@@ -17,6 +17,8 @@ defmodule NwoneWeb.GameController do
 
     player = Nwone.PlayerServer.start(name, Nwone.GameServer)
 
-    live_render(conn, NwoneWeb.GameLive, session: %{"player" => player, "player_pid" => player.pid})
+    live_render(conn, NwoneWeb.GameLive,
+      session: %{"player" => player, "player_pid" => player.pid}
+    )
   end
 end
