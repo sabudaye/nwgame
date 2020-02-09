@@ -57,6 +57,7 @@ defmodule Nwone.PlayerServer do
   def init(%Player{name: player_name, game_server: game_server} = player) do
     Logger.info("Starting player process for #{player_name}")
     {_, player} = GameServer.join(game_server, player)
+    GameLive.notify(GameLive.topic())
     {:ok, player, @timeout}
   end
 
