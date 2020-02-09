@@ -7,6 +7,7 @@ defmodule Nwone.GameMap do
 
   defstruct size: @default_map_size, tiles: []
 
+  alias Nwone.GameMap
   alias Nwone.GameMap.Tile
 
   def generate(game_map_size \\ @default_map_size) do
@@ -17,22 +18,51 @@ defmodule Nwone.GameMap do
       %Tile{
         row: row,
         col: column,
-        blocked: blocked?(row, column),
+        blocked: blocked_tile?(row, column, game_map_size),
         first_in_row: column == 1,
         last_in_row: column == game_map_size
       }
     end
-    %Nwone.GameMap{tiles: tiles}
+    %GameMap{tiles: tiles}
   end
 
-  defp blocked?(row, column) do
-    case {row, column} do
-      # borders
+  def put_player(game_map, player_name) do
+    {tile, index} = game_map
+      |> free_tiles()
+      |> Enum.random()
+
+    %GameMap{game_map | tiles: List.replace_at(
+      game_map.tiles,
+      index,
+      %Tile{tile | players: [player_name | tile.players]}
+    )}
+  end
+
+  defp free_tiles(game_map) do
+    game_map.tiles
+    |> Enum.with_index()
+    |> Enum.filter(fn ({tile, _index}) ->
+      !tile.blocked && length(tile.players) == 0
+    end)
+  end
+
+  defp blocked_tile?(row, column, game_map_size) do
+    position = {row, column}
+    border?(position, game_map_size) || blocking_object?(position)
+  end
+
+  defp border?(position, game_map_size) do
+    case position do
       {1, _} -> true
       {_, 1} -> true
-      {@default_map_size, _} -> true
-      {_, @default_map_size} -> true
-      # blocked tiles
+      {^game_map_size, _} -> true
+      {_, ^game_map_size} -> true
+      _ -> false
+    end
+  end
+
+  defp blocking_object?(position) do
+    case position do
       {5, 2} -> true
       {5, 4} -> true
       {5, 5} -> true

@@ -38,7 +38,7 @@ body {
 }
 
 .game-map {
-    border: 1px solid #e6305a;
+    border: 1px solid #226888;
     position: relative;
     width: 80vmin;
     height: 80vmin;
@@ -48,6 +48,8 @@ body {
     border: 1px solid #a3a3a3;
     background-color: #dfdfdf;
     padding: 0;
+    width: 7vmin;
+    height: 7vmin;
     text-align: center;
 }
 
@@ -56,5 +58,28 @@ body {
 }
 
 .tile.blocked {
-    background-color: #023513;
+    background-color: #226888;
+}
+
+.tile.player {
+    background-image: url("/images/player.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 3vmin 5vmin;
+}
+
+.tile.enemy {
+    background-image: url("/images/enemy.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 4vmin 5vmin;
+}
+
+.player-name {
+    position: relative;
+    bottom: -3vmin;
+    color:red;
+}
+td.tile.player div.player-name{
+    color: green;
 }

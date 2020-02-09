@@ -66,7 +66,7 @@ input[type='text']:focus {
     background: rgba(255, 255, 255, 0.1);
     font-size: 36px;
     line-height: 36px;
-    border-color: #e6305a;
+    border-color: #226888;
     color: #313638;
 }
 
@@ -85,7 +85,7 @@ input[type='text']:focus {
 }
 
 .login-submit:hover {
-    background: #e6305a;
+    background: #226888;
 }
 
 @media only screen and (max-width: 1800px) {

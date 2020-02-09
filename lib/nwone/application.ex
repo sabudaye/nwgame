@@ -8,11 +8,13 @@ defmodule Nwone.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      # Start the endpoint when the application starts
-      NwoneWeb.Endpoint
-      # Starts a worker by calling: Nwone.Worker.start_link(arg)
-      # {Nwone.Worker, arg},
+      {Registry, keys: :unique, name: Nwone.PlayerRegistry},
+      {DynamicSupervisor, name: Nwone.PlayerSupervisor, strategy: :one_for_one},
+      NwoneWeb.Endpoint,
+      Nwone.GameServer
     ]
+
+    :ets.new(:players, [:public, :named_table])
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
