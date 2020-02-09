@@ -79,9 +79,9 @@ defmodule Nwone.PlayerServer do
     {:reply, {map, player}, player}
   end
 
-  def handle_cast({:die, atacker}, player) do
+  def handle_cast({:die, attacker}, player) do
     player = Player.die(player)
-    Logger.info("Player #{player.name} died from attack of #{atacker.name}")
+    Logger.info("Player #{player.name} died from attack of #{attacker.name}")
     GameLive.notify(GameLive.topic())
     :timer.send_after(@resurect_time, self(), :resurect)
     {:noreply, player}
