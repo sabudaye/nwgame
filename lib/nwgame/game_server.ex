@@ -94,7 +94,11 @@ defmodule Nwgame.GameServer do
     {:reply, {map, player}, new_state}
   end
 
-  def handle_call({:move_player, player, move}, _from, %{map: map, players: players, timer: ref} = state) do
+  def handle_call(
+        {:move_player, player, move},
+        _from,
+        %{map: map, players: players, timer: ref} = state
+      ) do
     player_index = find_player(players, player)
 
     {new_map, player} = do_move_player(player_index, map, player, move)

@@ -25,10 +25,23 @@ In case of any possible errors, please refresh the browser
 
 You need elixir annd erlang with versions from .tool-versions file installed on you machine
 
+To run tests:
+
+  * `mix test`
+  * `mix credo`
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
   * Install Node.js dependencies with `cd assets && npm install`
   * Start Phoenix endpoint with `mix phx.server`
+  * Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+To build release:
+
+  * `mix release`
+
+Note:
+
+Buidpack configuration files are removed, since deployemt `Gigalixir` or `Heroku` is not supported anymore.
+Last production deployment of this game was done on Google Cloud Platform for simplicity of use and better performance.

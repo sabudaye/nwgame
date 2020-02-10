@@ -10,7 +10,7 @@ defmodule NwgameWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  scope "/",NwgameWeb do
+  scope "/", NwgameWeb do
     pipe_through :browser
 
     get "/", GameController, :login

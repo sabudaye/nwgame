@@ -1,4 +1,8 @@
 defmodule NwgameWeb.GameLive do
+  @moduledoc """
+  Phoenix LiveView controller to interact with connect users
+  """
+
   use Phoenix.LiveView
 
   alias Nwgame.GameServer

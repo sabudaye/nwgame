@@ -76,7 +76,7 @@ defmodule Nwgame.GameMap do
     game_map.tiles
     |> Enum.with_index()
     |> Enum.filter(fn {tile, _index} ->
-      !tile.blocked && length(tile.players) == 0
+      !tile.blocked && tile.players == []
     end)
   end
 
@@ -101,6 +101,7 @@ defmodule Nwgame.GameMap do
     end
   end
 
+  # credo:disable-for-next-line
   defp blocking_object?(position) do
     case position do
       {5, 2} -> true

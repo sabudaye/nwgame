@@ -21,7 +21,9 @@ defmodule Nwgame.GameServerTest do
   describe "join/1" do
     test "joins player to given server" do
       assert {:ok, _pid} = GameServer.start_link(@server_name)
-      assert {%GameMap{}, %Player{}} = GameServer.join(@server_name, Player.new(:test, @server_name))
+
+      assert {%GameMap{}, %Player{}} =
+               GameServer.join(@server_name, Player.new(:test, @server_name))
     end
   end
 
@@ -32,9 +34,15 @@ defmodule Nwgame.GameServerTest do
       assert {:ok, _pid} = GameServer.start_link(@server_name)
 
       assert {%GameMap{}, %Player{}} = GameServer.move_player(@server_name, new_player, :ArrowUp)
-      assert {%GameMap{}, %Player{}} = GameServer.move_player(@server_name, new_player, :ArrowDown)
-      assert {%GameMap{}, %Player{}} = GameServer.move_player(@server_name, new_player, :ArrowLeft)
-      assert {%GameMap{}, %Player{}} = GameServer.move_player(@server_name, new_player, :ArrowRight)
+
+      assert {%GameMap{}, %Player{}} =
+               GameServer.move_player(@server_name, new_player, :ArrowDown)
+
+      assert {%GameMap{}, %Player{}} =
+               GameServer.move_player(@server_name, new_player, :ArrowLeft)
+
+      assert {%GameMap{}, %Player{}} =
+               GameServer.move_player(@server_name, new_player, :ArrowRight)
     end
   end
 
