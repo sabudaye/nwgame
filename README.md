@@ -1,4 +1,4 @@
-# Nwone
+# nwgame
 
 To start your Phoenix server:
 

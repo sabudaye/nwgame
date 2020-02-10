@@ -1,6 +1,6 @@
 import Config
 
-config :nwone, NwoneWeb.Endpoint,
+config :nwgame, NwgameWeb.Endpoint,
   load_from_system_env: true,
   http: [port: {:system, "PORT"}],
   check_origin: false,

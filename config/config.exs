@@ -8,11 +8,11 @@
 use Mix.Config
 
 # Configures the endpoint
-config :nwone, NwoneWeb.Endpoint,
+config :nwgame, NwgameWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "wJz9ezodcsU9y0g4XjOrbhnTkb1xATHwcBXmSNbN/43GRgg1Z7gyhXSHr4vpsehS",
-  render_errors: [view: NwoneWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Nwone.PubSub, adapter: Phoenix.PubSub.PG2],
+  render_errors: [view: NwgameWeb.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: Nwgame.PubSub, adapter: Phoenix.PubSub.PG2],
   live_view: [
     signing_salt: "SECRET_SALT"
   ]

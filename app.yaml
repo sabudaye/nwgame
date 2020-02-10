@@ -1,4 +1,4 @@
 env: flex
 runtime: gs://elixir-runtime/elixir.yaml
 runtime_config:
-    release_app: nwone
+    release_app: nwgame

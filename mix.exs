@@ -1,11 +1,11 @@
-defmodule Nwone.MixProject do
+defmodule Nwgame.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :nwone,
+      app: :nwgame,
       releases: [
-        nwone: [
+        nwgame: [
           include_erts: true,
           include_executables_for: [:unix],
           applications: [
@@ -28,7 +28,7 @@ defmodule Nwone.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Nwone.Application, []},
+      mod: {Nwgame.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

@@ -13,14 +13,14 @@ use Mix.Config
 
 secret_key_base = "3m/P/miMJGk+WdcOwQCxEuivsQiw3SJjF0NYWN+vQxFJoIqJ4eQOa0OYesDcivsy"
 
-config :nwone, NwoneWeb.Endpoint, secret_key_base: secret_key_base
+config :nwgame, NwgameWeb.Endpoint, secret_key_base: secret_key_base
 
 # ## Using releases (Elixir v1.9+)
 #
 # If you are doing OTP releases, you need to instruct Phoenix
 # to start each relevant endpoint:
 #
-#     config :nwone, NwoneWeb.Endpoint, server: true
+#     config :nwgame, NwgameWeb.Endpoint, server: true
 #
 # Then you can assemble a release by calling `mix release`.
 # See `mix help release` for more information.

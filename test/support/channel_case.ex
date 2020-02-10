@@ -1,4 +1,4 @@
-defmodule NwoneWeb.ChannelCase do
+defmodule NwgameWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -11,7 +11,7 @@ defmodule NwoneWeb.ChannelCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use NwoneWeb.ChannelCase, async: true`, although
+  by setting `use NwgameWeb.ChannelCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -23,7 +23,7 @@ defmodule NwoneWeb.ChannelCase do
       use Phoenix.ChannelTest
 
       # The default endpoint for testing
-      @endpoint NwoneWeb.Endpoint
+      @endpoint NwgameWeb.Endpoint
     end
   end
 
