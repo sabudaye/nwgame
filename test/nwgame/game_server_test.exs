@@ -47,14 +47,6 @@ defmodule Nwgame.GameServerTest do
     end
   end
 
-  describe "resurection/2" do
-    test "restarts players process and places it randomly on map" do
-      assert {:ok, _pid} = GameServer.start_link(@server_name)
-      assert {_map, player} = GameServer.join(@server_name, Player.new(:test, @server_name))
-      assert :ok = GameServer.resurection(@server_name, player)
-    end
-  end
-
   describe "remove_player/2" do
     test "removes player from map" do
       assert {:ok, _pid} = GameServer.start_link(@server_name)

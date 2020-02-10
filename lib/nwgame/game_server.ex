@@ -41,10 +41,6 @@ defmodule Nwgame.GameServer do
     GenServer.call(game_server, {:hit, player})
   end
 
-  def resurection(game_server, player) do
-    GenServer.cast(game_server, {:resurection, player})
-  end
-
   def remove_player(game_server, player) do
     GenServer.cast(game_server, {:remove_player, player})
   end
@@ -127,17 +123,6 @@ defmodule Nwgame.GameServer do
       |> put_in([:players], List.delete_at(players, player_index))
 
     Logger.info("Player #{player.name} removed")
-    {:noreply, new_state}
-  end
-
-
-  def handle_cast({:resurection, player}, %{players: players} = state) do
-    player_index = find_player(players, player)
-
-    new_state =
-      state
-      |> put_in([:players], replace_player(player_index, players, player))
-
     {:noreply, new_state}
   end
 
