@@ -40,6 +40,7 @@ To start your Phoenix server:
 To build release:
 
   * `mix release`
+  * `MIX_ENV=prod mix release` for production release
 
 Note:
 
