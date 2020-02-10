@@ -13,8 +13,12 @@ defmodule Nwone.GameServer do
 
   # API
 
-  def start_link(_) do
+  def start_link([]) do
     GenServer.start_link(__MODULE__, GameMap.generate(), name: __MODULE__)
+  end
+
+  def start_link(name) do
+    GenServer.start_link(__MODULE__, GameMap.generate(), name: name)
   end
 
   def get_map() do

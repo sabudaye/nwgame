@@ -16,12 +16,8 @@ defmodule Nwone.PlayerServer do
   # API
 
   def start(player_name, game_server) do
-    player = %Player{
-      name: player_name,
-      pid: via_tuple(player_name),
-      game_server: game_server,
-      timer: start_timer()
-    }
+    player = Player.new(player_name, game_server)
+    player = %Player{player | timer: start_timer()}
 
     _ = DynamicSupervisor.start_child(@supervisor, {__MODULE__, player})
     get_player(player.pid)
@@ -41,9 +37,6 @@ defmodule Nwone.PlayerServer do
   def start_link(%Player{} = player) do
     GenServer.start_link(__MODULE__, player, name: player.pid)
   end
-
-  def via_tuple(player_name),
-    do: {:via, Registry, {@registry, {__MODULE__, player_name}}}
 
   def move(pid, move) do
     GenServer.call(pid, move)
